@@ -102,6 +102,11 @@ CourseName Course::getPrereq(int i) const
 	return prereqs[i];
 }
 
+Course &Course::operator=(Course rhs) {
+    std::swap(*this, rhs);
+    return *this;
+}
+
 bool operator==(const Course &lhs, const Course &rhs)
 {
     return lhs.getName() == rhs.getName() &&

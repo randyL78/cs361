@@ -72,6 +72,13 @@ public:
 	 */
 	CourseName getPrereq(int i) const;
 
+	/**
+	 * Assigns one Course to another
+	 * @param rhs the Course to be assigned
+	 * @return
+	 */
+	Course& operator=(Course rhs);
+
 
 private:
 	friend std::ostream& operator<< (std::ostream& out, const Course& c);
@@ -85,7 +92,15 @@ private:
  */
 bool operator==(const Course &lhs, const Course &rhs);
 
+/**
+ * Compares the CourseName of 2 Courses
+ * @param lhs
+ * @param rhs
+ * @return true if lhs CoursName is less thant rhs CourseName
+ */
 bool operator<(const Course &lhs, const Course &rhs);
+
+
 
 std::ostream& operator<< (std::ostream& out, const Course& c);
 

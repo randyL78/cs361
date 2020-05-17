@@ -43,6 +43,17 @@ Course::Course(const Course &course)
     }
 }
 
+/**
+ * Move constructor
+ * @param course
+ */
+Course::Course(Course &&course)
+: name(course.name), numberOfPrerequisites(course.numberOfPrerequisites),
+  maxPrerequisites(10), prereqs(course.prereqs)
+{
+    course.prereqs = nullptr;
+}
+
 Course::~Course() {
    delete [] prereqs;
 }

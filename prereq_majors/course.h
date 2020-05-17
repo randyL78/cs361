@@ -33,6 +33,12 @@ public:
 	Course(const Course &course);
 
 	/**
+	 * Move constructor
+	 * @param course
+	 */
+	Course(Course &&course);
+
+	/**
 	 * Just your run of the mill destructor
 	 */
 	~Course();

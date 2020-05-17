@@ -43,6 +43,17 @@ Course::Course(const Course &course)
     }
 }
 
+/**
+ * Move constructor
+ * @param course
+ */
+Course::Course(Course &&course)
+: name(course.name), numberOfPrerequisites(course.numberOfPrerequisites),
+  maxPrerequisites(10), prereqs(course.prereqs)
+{
+    course.prereqs = nullptr;
+}
+
 Course::~Course() {
    delete [] prereqs;
 }
@@ -102,12 +113,20 @@ CourseName Course::getPrereq(int i) const
 	return prereqs[i];
 }
 
-Course &Course::operator=(Course rhs) {
-    name = rhs.getName();
-    numberOfPrerequisites = rhs.getNumberOfPrereqs();
-    for (int i = 0; i < numberOfPrerequisites; i++) {
-        prereqs[i] = rhs.getPrereq(i);
-    }
+Course &Course::operator=(const Course &rhs)
+{
+    Course copy = rhs;
+    std::swap(*this, copy);
+
+    return *this;
+}
+
+Course &Course::operator=(Course &&rhs)
+{
+    std::swap(name, rhs.name);
+    std::swap(numberOfPrerequisites, rhs.numberOfPrerequisites);
+    std::swap(prereqs, rhs.prereqs);
+
     return *this;
 }
 

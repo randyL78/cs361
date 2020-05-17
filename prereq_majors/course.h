@@ -33,6 +33,12 @@ public:
 	Course(const Course &course);
 
 	/**
+	 * Move constructor
+	 * @param course
+	 */
+	Course(Course &&course);
+
+	/**
 	 * Just your run of the mill destructor
 	 */
 	~Course();
@@ -73,11 +79,19 @@ public:
 	CourseName getPrereq(int i) const;
 
 	/**
-	 * Assigns one Course to another
+	 * Assigns one Course to another (Copy Assignment)
 	 * @param rhs the Course to be assigned
 	 * @return
 	 */
-	Course& operator=(Course rhs);
+	Course& operator=(const Course &rhs);
+
+	/**
+	 * Assigns one Course to another (Move Assignment)
+	 * @param rhs
+	 * @return
+	 */
+	Course& operator=(Course &&rhs);
+
 
 
 private:

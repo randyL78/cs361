@@ -103,7 +103,11 @@ CourseName Course::getPrereq(int i) const
 }
 
 Course &Course::operator=(Course rhs) {
-    std::swap(*this, rhs);
+    name = rhs.getName();
+    numberOfPrerequisites = rhs.getNumberOfPrereqs();
+    for (int i = 0; i < numberOfPrerequisites; i++) {
+        prereqs[i] = rhs.getPrereq(i);
+    }
     return *this;
 }
 

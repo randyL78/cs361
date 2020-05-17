@@ -15,11 +15,27 @@ class Course {
     CourseName * prereqs;      ///< Pointer to an array of course names.
 public:
 
+    /**
+     * Create a new course and set cname to null
+     */
+     Course();
+
 	/**
 	 * Create a new course named cname and having no
 	 * known prerequisites;
 	 */
 	Course (const CourseName& cname);
+
+	/**
+	 * Create a deep copy of a course
+	 * @param course - the course to copy
+	 */
+	Course(const Course &course);
+
+	/**
+	 * Just your run of the mill destructor
+	 */
+	~Course();
 
 	/**
 	 * @return the name of the course
@@ -56,12 +72,22 @@ public:
 	 */
 	CourseName getPrereq(int i) const;
 
+
 private:
 	friend std::ostream& operator<< (std::ostream& out, const Course& c);
 };
 
-std::ostream& operator<< (std::ostream& out, const Course& c);
+/**
+ * Compares two courses for equality
+ * @param lhs
+ * @param rhs
+ * @return
+ */
+bool operator==(const Course &lhs, const Course &rhs);
 
+bool operator<(const Course &lhs, const Course &rhs);
+
+std::ostream& operator<< (std::ostream& out, const Course& c);
 
 
 #endif

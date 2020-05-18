@@ -113,7 +113,7 @@ CourseName Course::getPrereq(int i) const
 	return prereqs[i];
 }
 
-Course &Course::operator=(const Course &rhs)
+const Course &Course::operator=(const Course &rhs)
 {
     Course copy = rhs;
     std::swap(*this, copy);
@@ -137,6 +137,10 @@ bool operator==(const Course &lhs, const Course &rhs)
 }
 
 bool operator<(const Course &lhs, const Course &rhs) {
+    if (lhs.getName() == rhs.getName() &&
+        lhs.getNumberOfPrereqs() < rhs.getNumberOfPrereqs()) {
+        return true;
+    }
     if (lhs.getName() < rhs.getName()) {
         return true;
     }

@@ -83,7 +83,7 @@ public:
 	 * @param rhs the Course to be assigned
 	 * @return
 	 */
-	Course& operator=(const Course &rhs);
+	const Course& operator=(const Course &rhs);
 
 	/**
 	 * Assigns one Course to another (Move Assignment)
@@ -110,7 +110,7 @@ bool operator==(const Course &lhs, const Course &rhs);
  * Compares the CourseName of 2 Courses
  * @param lhs
  * @param rhs
- * @return true if lhs CoursName is less thant rhs CourseName
+ * @return true if lhs CourseName is less thant rhs CourseName
  */
 bool operator<(const Course &lhs, const Course &rhs);
 

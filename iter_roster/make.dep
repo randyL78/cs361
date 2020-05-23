@@ -1,0 +1,11 @@
+section.o: section.cpp section.h course.h student.h name.h
+student.o: student.cpp student.h name.h
+unittest.o: unittest.cpp unittest.h
+course.o: course.cpp course.h
+listrosters.o: listrosters.cpp section.h course.h student.h name.h \
+ faculty.h
+faculty.o: faculty.cpp faculty.h name.h section.h course.h student.h
+testFaculty.o: testFaculty.cpp faculty.h name.h section.h course.h \
+ student.h unittest.h
+name.o: name.cpp name.h
+io_ops.o: io_ops.cpp course.h faculty.h name.h section.h student.h

@@ -60,7 +60,7 @@ public:
    * Copy constructor. Creates a deep copy of the Faculty given
    * @param faculty
    */
-//  Faculty (Faculty &faculty);
+  Faculty (const Faculty &faculty);
 
   /**
    * Get the faculty member's name.
@@ -141,7 +141,12 @@ public:
   iterator end();
   const_iterator end() const;
 
-
+  /**
+   * Assigns the Faculty on the right to the faculty on the left
+   * @param rhs the Faculty to copy
+   * @return a copy of Faculty to assign
+   */
+  const Faculty& operator=(const Faculty &rhs);
 
 
 

@@ -20,15 +20,19 @@ Faculty::Faculty (Name name, iterator startSection, iterator stopSection)
 {
     for (auto it = startSection; it < stopSection; it++)
     {
-      sections[numSections++] = *it;
+      addSection(*it);
     }
 }
 
-//Faculty::Faculty(Faculty &faculty)
-//  : theName(faculty.theName), theMaxSections(10000), numSections(faculty.numSections), sections(new Section[theMaxSections])
-//{
-//
-//}
+Faculty::Faculty(const Faculty &faculty)
+  : theName(faculty.theName), theMaxSections(10000), numSections(0)
+  , sections(new Section[theMaxSections])
+{
+  for (auto it = faculty.begin(); it < faculty.end(); it++)
+  {
+    addSection(*it);
+  }
+}
 
 
 const Section& Faculty::getSection (int callNumber) const
@@ -129,4 +133,16 @@ bool Faculty::operator< (const Faculty& right) const
   }
   else
 	  return getName() < right.getName();
+}
+
+const Faculty& Faculty::operator=(const Faculty &rhs)
+{
+  theName = rhs.getName();
+
+  for (auto it = rhs.begin(); it < rhs.end(); it++)
+  {
+    addSection(*it);
+  }
+
+  return *this;
 }

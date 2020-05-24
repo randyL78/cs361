@@ -6,15 +6,29 @@ using namespace std;
 
 
 Faculty::Faculty (int maxSections)
-  : theMaxSections(10000), numSections(0)
+  : theMaxSections(10000), numSections(0), sections(new Section[theMaxSections])
 {
 }
 
 Faculty::Faculty (Name name, int maxSections)
-  : theName(name), theMaxSections(10000), numSections(0)
+  : theName(name), theMaxSections(10000), numSections(0), sections(new Section[theMaxSections])
 {
 }
 
+Faculty::Faculty (Name name, iterator startSection, iterator stopSection)
+  : theName(name), theMaxSections(10000), numSections(0), sections(new Section[theMaxSections])
+{
+    for (auto it = startSection; it < stopSection; it++)
+    {
+      sections[numSections++] = *it;
+    }
+}
+
+//Faculty::Faculty(Faculty &faculty)
+//  : theName(faculty.theName), theMaxSections(10000), numSections(faculty.numSections), sections(new Section[theMaxSections])
+//{
+//
+//}
 
 
 const Section& Faculty::getSection (int callNumber) const
@@ -61,6 +75,26 @@ void Faculty::addSection(Section s)
   sections[k] = s;
 }
 
+// Iterator functions
+Faculty::iterator Faculty::begin()
+{
+  return sections; // TODO: make this more generic and not reliant on array type
+}
+
+Faculty::const_iterator Faculty::end() const
+{
+  return sections + numSections;  // TODO: make this more generic and not reliant on array type
+}
+
+Faculty::const_iterator Faculty::begin() const
+{
+  return sections; // TODO: make this more generic and not reliant on array type
+}
+
+Faculty::iterator Faculty::end()
+{
+  return sections + numSections;  // TODO: make this more generic and not reliant on array type
+}
 
 bool Faculty::operator== (const Faculty& right) const
 {

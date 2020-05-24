@@ -3,7 +3,7 @@
 
 #include <string>
 #include <iostream>
-
+#include <iterator>
 
 #include "name.h"
 #include "section.h"
@@ -19,8 +19,13 @@ class Faculty
   Name theName;
 
   int theMaxSections;
-  Section sections[1000]; //* Change this to Section* sections;
   int numSections;
+  Section* sections;
+
+
+  // Iterator types
+  typedef Section*          iterator;
+  typedef const Section*    const_iterator;
 
 
 public:
@@ -42,6 +47,20 @@ public:
    */
   Faculty (Name name, int maxSections = 100);
 
+  /**
+   * Create a faculty member with given name and add sections from a range
+   * of sections
+   * @param name name for this faculty member
+   * @param startSection
+   * @param stopSection
+   */
+  Faculty (Name name, iterator startSection, iterator stopSection);
+
+  /**
+   * Copy constructor. Creates a deep copy of the Faculty given
+   * @param faculty
+   */
+//  Faculty (Faculty &faculty);
 
   /**
    * Get the faculty member's name.
@@ -111,6 +130,20 @@ public:
    * @return true iff this faculty member should be listed before the other
    */
   bool operator< (const Faculty& right) const;
+
+  // Iterator functions
+  // Begin
+  // End
+  // Size
+  // TODO:Type will need to change from an int to an iterator once I get more into the function
+  iterator begin();
+  const_iterator begin() const;
+  iterator end();
+  const_iterator end() const;
+
+
+
+
 
 private:
   friend std::ostream& operator<< (std::ostream& out, const Faculty& fac);

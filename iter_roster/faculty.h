@@ -160,6 +160,13 @@ public:
    */
   const Faculty& operator=(const Faculty &rhs);
 
+  /**
+   * Move assignment operator
+   * @param rhs Faculty to move
+   * @return reference to Faculty on the right
+   */
+  Faculty& operator=(Faculty &&rhs);
+
 
 private:
   friend std::ostream& operator<< (std::ostream& out, const Faculty& fac);

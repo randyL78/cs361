@@ -159,3 +159,13 @@ const Faculty& Faculty::operator=(const Faculty &rhs)
 
   return *this;
 }
+
+Faculty& Faculty::operator=(Faculty &&rhs)
+{
+  theName = rhs.theName;
+  numSections = rhs.numSections;
+  sections = rhs.sections;
+  rhs.sections = nullptr;
+
+  return *this;
+}

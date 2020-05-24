@@ -34,6 +34,13 @@ Faculty::Faculty(const Faculty &faculty)
   }
 }
 
+Faculty::Faculty(Faculty &&faculty)
+  : theName(faculty.theName), theMaxSections(10000), numSections(faculty.numSections)
+  , sections(faculty.sections)
+{
+  // release the memory pointing to the faculty that is moving's pointer variables
+  faculty.sections = nullptr;
+}
 
 const Section& Faculty::getSection (int callNumber) const
 {

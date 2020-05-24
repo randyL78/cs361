@@ -69,6 +69,12 @@ public:
   Faculty(Faculty &&faculty);
 
   /**
+   * Destructor. Needed because of pointer variables and because we
+   * implemented other parts of Big 5
+   */
+  ~Faculty();
+
+  /**
    * Get the faculty member's name.
    * @return the name
    */

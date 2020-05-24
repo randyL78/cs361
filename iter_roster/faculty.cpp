@@ -42,6 +42,12 @@ Faculty::Faculty(Faculty &&faculty)
   faculty.sections = nullptr;
 }
 
+Faculty::~Faculty()
+{
+  delete [] sections;
+}
+
+
 const Section& Faculty::getSection (int callNumber) const
 {
   int i = 0;

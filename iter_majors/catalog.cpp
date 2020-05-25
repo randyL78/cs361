@@ -116,6 +116,7 @@ Course* CourseCatalog::getCourse (const CourseName& cname)
 	return nullptr;
 }
 
+
 const Course* CourseCatalog::getCourse (const CourseName& cname) const
 {
 	for (const Course* course: coursesOffered)
@@ -126,9 +127,11 @@ const Course* CourseCatalog::getCourse (const CourseName& cname) const
 	return nullptr;
 }
 
+
 bool CourseCatalog::containsCourse (const CourseName& cname) const {
 	return getCourse(cname) != nullptr;
 }
+
 
 Course* CourseCatalog::findOrAdd (const CourseName& cname)
 {
@@ -143,7 +146,6 @@ Course* CourseCatalog::findOrAdd (const CourseName& cname)
 }
 
 
-
 CourseName CourseCatalog::parseCourseName (string combined)
 {
   int i = 0;
@@ -155,6 +157,7 @@ CourseName CourseCatalog::parseCourseName (string combined)
   numIn >> num;
   return CourseName(dept, num);
 }
+
 
 bool CourseCatalog::operator== (const CourseCatalog& right) const
 {

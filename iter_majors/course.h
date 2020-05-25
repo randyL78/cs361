@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include "courseName.h"
+#include <iterator>
 
 using namespace std;
 
@@ -51,12 +52,19 @@ public:
 
     /**
      * Creates a Course with a range of prerequisites
+     *
      * @param cname Name of the course
      * @param firstCourse First course in the list of prerequisites
      * @param lastCourse Last course in the list of prerequisites
      */
     template<typename Iterator>
-    Course( const CourseName& cname, Iterator firstCourse, Iterator lastCourse);
+    // Note: use of template requires definition to be here in the header
+    Course( const CourseName& cname, Iterator firstCourse, Iterator lastCourse)
+            : name(cname)
+    {
+      for(Iterator it = firstCourse; it != lastCourse; it++)
+        prereqs.push_back(*it);
+    }
 
     /**
      * Just your run of the mill destructor
@@ -68,6 +76,7 @@ public:
 
     iterator end() { return prereqs.end(); }
     const_iterator end() const { return prereqs.cend(); }
+
 
     /**
      * @return the name of the course

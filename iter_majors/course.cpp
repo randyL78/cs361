@@ -35,8 +35,8 @@ Course::Course (const CourseName& cname)
 Course::Course (const CourseName& cname, const std::initializer_list<CourseName> prereqsList)
     : name(cname)
 {
-for (CourseName cname: prereqsList)
-prereqs.push_back(cname);
+  for (CourseName cname: prereqsList)
+    prereqs.push_back(cname);
 }
 
 
@@ -59,20 +59,6 @@ Course::Course(Course &&course)
     prereqs.push_back(cname);
 }
 
-/**
- * Creates a Course with a range of prerequisites
- *
- * Adapted from https://www.cs.odu.edu/~zeil/cs361/latest/Public/iterators/index.html#constructors-with-start-stop-ranges
- * by Dr Zeil
- */
-template<typename Iterator>
-Course::Course( const CourseName& cname, Iterator firstCourse, Iterator lastCourse)
-    : name(cname)
-{
-  for(auto it = firstCourse; it != lastCourse; it++)
-    prereqs.push_back(*it);
-}
-
 
 /**
 * @return the number of known prerequisites to this course.
@@ -88,8 +74,8 @@ int Course::getNumberOfPrereqs() const
  */
 void Course::addPrereq(const CourseName& cname)
 {
-  for (CourseName name: prereqs)
-    if (name == cname)
+  for (CourseName pname: prereqs)
+    if (pname == cname)
       return;
 
   prereqs.push_back(cname);
@@ -101,21 +87,10 @@ void Course::addPrereq(const CourseName& cname)
  */
 void Course::removePrereq(const CourseName& cname)
 {
-//  for (int i = 0; i < numberOfPrerequisites; ++i)
-//    if (prereqs[i] == cname)
-//    {
-//      for (int j = i+1; j < numberOfPrerequisites; ++j)
-//        prereqs[j-1] = prereqs[j];
-//      --numberOfPrerequisites;
-//      break;
-//    }
+//  for (const_iterator it = begin(); it != end(); it++)
+//    if ( *it == cname)
+//      prereqs.erase(it);
 }
-
-//CourseName Course::getPrereq(int i) const
-//{
-//  assert (i >= 0 && i < numberOfPrerequisites);
-//  return prereqs[i];
-//}
 
 const Course &Course::operator=(const Course &rhs)
 {

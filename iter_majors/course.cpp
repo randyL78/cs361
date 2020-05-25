@@ -46,7 +46,8 @@ Course::Course (const CourseName& cname, const std::initializer_list<CourseName>
 Course::Course(const Course &course)
         : name(course.getName())
 {
-
+  for (CourseName cname: course.prereqs)
+    prereqs.push_back(cname);
 }
 
 /**
@@ -74,8 +75,8 @@ int Course::getNumberOfPrereqs() const
  */
 void Course::addPrereq(const CourseName& cname)
 {
-  for (CourseName pname: prereqs)
-    if (pname == cname)
+  for (const_iterator it = begin(); it != end(); it++)
+    if ( *it == cname)
       return;
 
   prereqs.push_back(cname);
@@ -87,9 +88,18 @@ void Course::addPrereq(const CourseName& cname)
  */
 void Course::removePrereq(const CourseName& cname)
 {
-//  for (const_iterator it = begin(); it != end(); it++)
-//    if ( *it == cname)
-//      prereqs.erase(it);
+  const_iterator temp;
+  bool item_found = false;
+
+  for (const_iterator it = begin(); it != end(); it++) {
+    if (*it == cname) {
+      temp = it;
+      item_found = true;
+    }
+  }
+
+  if (item_found)
+    prereqs.erase(temp);
 }
 
 const Course &Course::operator=(const Course &rhs)

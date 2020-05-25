@@ -75,6 +75,7 @@ int Course::getNumberOfPrereqs() const
  */
 void Course::addPrereq(const CourseName& cname)
 {
+  // guard clause to make sure course doesn't already exist
   for (const_iterator it = begin(); it != end(); it++)
     if ( *it == cname)
       return;
@@ -91,6 +92,7 @@ void Course::removePrereq(const CourseName& cname)
   const_iterator temp;
   bool item_found = false;
 
+  // ensures the prereq exists before trying to remove it
   for (const_iterator it = begin(); it != end(); it++) {
     if (*it == cname) {
       temp = it;
@@ -104,6 +106,8 @@ void Course::removePrereq(const CourseName& cname)
 
 const Course &Course::operator=(const Course &rhs)
 {
+  // adapted from "Data Structures and Algorithm Analysis" 4th edition
+  // by Mark Weiss figure 1.18.
   Course copy = rhs;
   std::swap(*this, copy);
 
@@ -112,6 +116,8 @@ const Course &Course::operator=(const Course &rhs)
 
 Course &Course::operator=(Course &&rhs)
 {
+  // adapted from "Data Structures and Algorithm Analysis" 4th edition
+  // by Mark Weiss figure 1.18
   std::swap(name, rhs.name);
   std::swap(prereqs, rhs.prereqs);
 
@@ -136,9 +142,12 @@ bool operator<(const Course &lhs, const Course &rhs) {
 }
 
 std::ostream &operator<<(ostream &out, const Course &c) {
+  // based on operator of the same name inside of catalog.cpp
+  // of assignment 1 written by Dr Zeil, just updated to use
+  // iterator loop
   out << c.name << " (";
 
-  for (auto it = c.begin(); it != c.end(); it++)
+  for (Course::const_iterator it = c.begin(); it != c.end(); it++)
   {
     if (it != c.begin())
       out << ',';

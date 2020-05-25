@@ -13,8 +13,7 @@ using namespace std;
  * Create a new course and set cname to null
  */
 Course::Course()
-        : name(), numberOfPrerequisites(0), maxPrerequisites(10),
-          prereqs(new CourseName[maxPrerequisites])
+        : name()
 {
 
 }
@@ -24,8 +23,7 @@ Course::Course()
  * known prerequisites;
  */
 Course::Course (const CourseName& cname)
-        : name(cname), numberOfPrerequisites(0), maxPrerequisites(10),
-          prereqs(new CourseName[maxPrerequisites])
+        : name(cname)
 {
 
 }
@@ -35,12 +33,11 @@ Course::Course (const CourseName& cname)
  * @param course - the course to copy
  */
 Course::Course(const Course &course)
-        : name(course.getName()), numberOfPrerequisites(course.getNumberOfPrereqs()),
-          maxPrerequisites(10), prereqs(new CourseName[maxPrerequisites])
+        : name(course.getName())
 {
-  for (int i = 0; i < numberOfPrerequisites; i++) {
-    prereqs[i] = course.getPrereq(i);
-  }
+//  for (int i = 0; i < numberOfPrerequisites; i++) {
+//    prereqs[i] = course.getPrereq(i);
+//  }
 }
 
 /**
@@ -48,8 +45,7 @@ Course::Course(const Course &course)
  * @param course
  */
 Course::Course(Course &&course)
-        : name(course.name), numberOfPrerequisites(course.numberOfPrerequisites),
-          maxPrerequisites(10), prereqs(course.prereqs)
+        : name(course.name), prereqs(course.prereqs)
 {
   course.prereqs = nullptr;
 }
@@ -63,7 +59,7 @@ Course::~Course() {
  */
 int Course::getNumberOfPrereqs() const
 {
-  return numberOfPrerequisites;
+  return 1; // numberOfPrerequisites;
 }
 
 /**
@@ -74,12 +70,11 @@ int Course::getNumberOfPrereqs() const
  */
 void Course::addPrereq(const CourseName& cname)
 {
-  for (int i = 0; i < numberOfPrerequisites; ++i)
-    if (prereqs[i] == cname)
-      return;
-  assert (numberOfPrerequisites < maxPrerequisites);
-  prereqs[numberOfPrerequisites] = cname;
-  ++numberOfPrerequisites;
+//  for (int i = 0; i < numberOfPrerequisites; ++i)
+//    if (prereqs[i] == cname)
+//      return;
+//  prereqs[numberOfPrerequisites] = cname;
+//  ++numberOfPrerequisites;
 }
 
 /**
@@ -90,14 +85,14 @@ void Course::addPrereq(const CourseName& cname)
  */
 void Course::removePrereq(const CourseName& cname)
 {
-  for (int i = 0; i < numberOfPrerequisites; ++i)
-    if (prereqs[i] == cname)
-    {
-      for (int j = i+1; j < numberOfPrerequisites; ++j)
-        prereqs[j-1] = prereqs[j];
-      --numberOfPrerequisites;
-      break;
-    }
+//  for (int i = 0; i < numberOfPrerequisites; ++i)
+//    if (prereqs[i] == cname)
+//    {
+//      for (int j = i+1; j < numberOfPrerequisites; ++j)
+//        prereqs[j-1] = prereqs[j];
+//      --numberOfPrerequisites;
+//      break;
+//    }
 }
 
 /**
@@ -109,7 +104,7 @@ void Course::removePrereq(const CourseName& cname)
  */
 CourseName Course::getPrereq(int i) const
 {
-  assert (i >= 0 && i < numberOfPrerequisites);
+//  assert (i >= 0 && i < numberOfPrerequisites);
   return prereqs[i];
 }
 
@@ -124,7 +119,6 @@ const Course &Course::operator=(const Course &rhs)
 Course &Course::operator=(Course &&rhs)
 {
   std::swap(name, rhs.name);
-  std::swap(numberOfPrerequisites, rhs.numberOfPrerequisites);
   std::swap(prereqs, rhs.prereqs);
 
   return *this;

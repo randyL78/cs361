@@ -142,6 +142,8 @@ Course* CourseCatalog::findOrAdd (const CourseName& cname)
 	return newCourse;
 }
 
+
+
 CourseName CourseCatalog::parseCourseName (string combined)
 {
   int i = 0;
@@ -177,3 +179,4 @@ std::ostream& operator<< (std::ostream& out, const CourseCatalog& cat)
 	}
 	return out;
 }
+

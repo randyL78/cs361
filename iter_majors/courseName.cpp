@@ -34,3 +34,4 @@ ostream& operator<< (ostream& out, const CourseName& c)
   out << c.dept << c.num;
   return out;
 }
+

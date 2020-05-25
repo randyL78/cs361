@@ -8,11 +8,13 @@
 using namespace std;
 
 class Course {
-    //** You may not change the declarations in this private: area.
     CourseName name;           ///< Name of the course
-    int numberOfPrerequisites; ///< How many prereqs are currently in the array?
-    int maxPrerequisites;      ///< How many prereqs will fit into the array?
-    CourseName * prereqs;      ///< Pointer to an array of course names.
+    /* Change the following variables into a vector
+     int numberOfPrerequisites; ///< How many prereqs are currently in the array?
+     int maxPrerequisites;      ///< How many prereqs will fit into the array?
+     CourseName * prereqs;      ///< Pointer to an array of course names. */
+    std::vector<CourseName> prereqs;
+
 public:
 
     /**

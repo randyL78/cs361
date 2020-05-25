@@ -137,11 +137,13 @@ bool operator<(const Course &lhs, const Course &rhs) {
 
 std::ostream &operator<<(ostream &out, const Course &c) {
   out << c.name << " (";
-  for (int i = 0; i < c.prereqs.size(); ++i)
+
+  for (auto it = c.begin(); it != c.end(); it++)
   {
-    if (i > 0)
+    if (it != c.begin())
       out << ',';
-    out << c.prereqs[i];
+
+    out << *it;
   }
   out << ')';
   return out;

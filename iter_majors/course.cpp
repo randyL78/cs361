@@ -28,60 +28,76 @@ Course::Course (const CourseName& cname)
 
 }
 
+
 /**
- * Create a deep copy of a course
- * @param course - the course to copy
+ * Create a new course named cname that does have known prerequisites
  */
+Course::Course (const CourseName& cname, const std::initializer_list<CourseName> prereqsList)
+    : name(cname)
+{
+for (CourseName cname: prereqsList)
+prereqs.push_back(cname);
+}
+
+
+/**
+* Create a deep copy of a course
+*/
 Course::Course(const Course &course)
         : name(course.getName())
 {
-//  for (int i = 0; i < numberOfPrerequisites; i++) {
-//    prereqs[i] = course.getPrereq(i);
-//  }
+
 }
 
 /**
  * Move constructor
- * @param course
  */
 Course::Course(Course &&course)
         : name(course.name), prereqs(course.prereqs)
 {
-  course.prereqs = nullptr;
-}
-
-Course::~Course() {
-  delete [] prereqs;
+  for (CourseName cname: course.prereqs)
+    prereqs.push_back(cname);
 }
 
 /**
- * @return the number of known prerequisites to this course.
+ * Creates a Course with a range of prerequisites
+ *
+ * Adapted from https://www.cs.odu.edu/~zeil/cs361/latest/Public/iterators/index.html#constructors-with-start-stop-ranges
+ * by Dr Zeil
  */
+template<typename Iterator>
+Course::Course( const CourseName& cname, Iterator firstCourse, Iterator lastCourse)
+    : name(cname)
+{
+  for(auto it = firstCourse; it != lastCourse; it++)
+    prereqs.push_back(*it);
+}
+
+
+/**
+* @return the number of known prerequisites to this course.
+*/
 int Course::getNumberOfPrereqs() const
 {
-  return 1; // numberOfPrerequisites;
+  return prereqs.size();
 }
 
 /**
  * Adds cname to the list of prerequisites for this course.
  * If this name is already in the list, this has no effect.
- *
- * @param cname name of a prerequisite course
  */
 void Course::addPrereq(const CourseName& cname)
 {
-//  for (int i = 0; i < numberOfPrerequisites; ++i)
-//    if (prereqs[i] == cname)
-//      return;
-//  prereqs[numberOfPrerequisites] = cname;
-//  ++numberOfPrerequisites;
+  for (CourseName name: prereqs)
+    if (name == cname)
+      return;
+
+  prereqs.push_back(cname);
 }
 
 /**
  * Removes cname from the list of prerequisites for this course.
  * If this name is not in the list, this has no effect.
- *
- * @param cname name of a prerequisite course
  */
 void Course::removePrereq(const CourseName& cname)
 {
@@ -95,18 +111,11 @@ void Course::removePrereq(const CourseName& cname)
 //    }
 }
 
-/**
- * Get the name of the i_th prerequisite.
- *
- * @precondition 0 <= i && i < getNumberofPrereqs()
- * @param i index of the prerequisite to retrieve
- * @return name of the prerequisite course
- */
-CourseName Course::getPrereq(int i) const
-{
+//CourseName Course::getPrereq(int i) const
+//{
 //  assert (i >= 0 && i < numberOfPrerequisites);
-  return prereqs[i];
-}
+//  return prereqs[i];
+//}
 
 const Course &Course::operator=(const Course &rhs)
 {
@@ -139,4 +148,16 @@ bool operator<(const Course &lhs, const Course &rhs) {
     return true;
   }
   return false;
+}
+
+std::ostream &operator<<(ostream &out, const Course &c) {
+  out << c.name << " (";
+  for (int i = 0; i < c.prereqs.size(); ++i)
+  {
+    if (i > 0)
+      out << ',';
+    out << c.prereqs[i];
+  }
+  out << ')';
+  return out;
 }

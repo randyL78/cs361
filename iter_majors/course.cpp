@@ -76,8 +76,8 @@ int Course::getNumberOfPrereqs() const
 void Course::addPrereq(const CourseName& cname)
 {
   // guard clause to make sure course doesn't already exist
-  for (const_iterator it = begin(); it != end(); it++)
-    if ( *it == cname)
+  for (CourseName p_name: prereqs)
+    if (p_name == cname)
       return;
 
   prereqs.push_back(cname);
@@ -89,18 +89,14 @@ void Course::addPrereq(const CourseName& cname)
  */
 void Course::removePrereq(const CourseName& cname)
 {
-  const_iterator temp;
-  bool item_found = false;
+  const_iterator temp = end();
 
   // ensures the prereq exists before trying to remove it
-  for (const_iterator it = begin(); it != end(); it++) {
-    if (*it == cname) {
+  for (const_iterator it = begin(); it != end(); it++)
+    if (*it == cname)
       temp = it;
-      item_found = true;
-    }
-  }
 
-  if (item_found)
+  if (temp != end())
     prereqs.erase(temp);
 }
 

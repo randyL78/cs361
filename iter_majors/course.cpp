@@ -56,8 +56,7 @@ Course::Course(const Course &course)
 Course::Course(Course &&course)
         : name(course.name), prereqs(course.prereqs)
 {
-  for (CourseName cname: course.prereqs)
-    prereqs.push_back(cname);
+
 }
 
 

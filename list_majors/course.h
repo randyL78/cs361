@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <initializer_list>
 #include "courseName.h"
 #include <iterator>
 
@@ -11,12 +12,12 @@ using namespace std;
 
 class Course {
     CourseName name;           ///< Name of the course
-    std::vector<CourseName> prereqs;
+    vector<CourseName> prereqs;
 
 public:
     // aliases for iterator support piggy backing off of standard vector
-    using iterator = std::vector<CourseName>::iterator;
-    using const_iterator = std::vector<CourseName>::const_iterator;
+    using iterator       = vector<CourseName>::iterator;
+    using const_iterator = vector<CourseName>::const_iterator;
     // end iterator aliases
 
 
@@ -36,7 +37,7 @@ public:
      * @param cname
      * @param prereqsList
      */
-    Course (const CourseName& cname, const std::initializer_list<CourseName> prereqsList);
+    Course (const CourseName& cname, const initializer_list<CourseName>);
 
     /**
      * Creates a Course with a range of prerequisites
@@ -88,7 +89,7 @@ public:
      * @param rhs
      * @return
      */
-    bool operator==(const Course &rhs);
+    bool operator==(const Course &rhs) const;
 
     /**
      * Compares the CourseName of 2 Courses
@@ -96,7 +97,7 @@ public:
      * @param rhs
      * @return true if lhs CourseName is less thant rhs CourseName
      */
-    bool operator<(const Course &rhs);
+    bool operator<(const Course &rhs) const;
 
 private:
     friend std::ostream& operator<< (std::ostream& out, const Course& c);

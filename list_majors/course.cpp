@@ -61,7 +61,7 @@ void Course::addPrereq(const CourseName& cname)
  */
 void Course::removePrereq(const CourseName& cname)
 {
-  for (const_iterator it = begin(); it != end(); it++)
+  for (auto it = prereqs.begin(); it != prereqs.end(); ++it)
     if (*it == cname)
     {
       prereqs.erase(it);
@@ -69,7 +69,7 @@ void Course::removePrereq(const CourseName& cname)
     }
 }
 
-bool Course::operator==(const Course &rhs)
+bool Course::operator==(const Course &rhs) const
 {
   return name    == rhs.name &&
          prereqs == rhs.prereqs;
@@ -77,13 +77,13 @@ bool Course::operator==(const Course &rhs)
 
 // Using Dr Zeil's example code method
 // from: https://www.cs.odu.edu/~zeil/submit/websubmit.cgi?asstinfo=/home/zeil/courses/cs361/sum20/Assts/iter_majors/iter_majors.ini&bogus=foo.txt
-bool Course::operator<(const Course &rhs) {
+bool Course::operator< (const Course &rhs) const {
   using namespace std::rel_ops;
 
-  if (name != rhs.name)
-    return false;
+	if (name != rhs.name)
+		return name < rhs.name;
 
-  return prereqs < rhs.prereqs;
+	return prereqs < rhs.prereqs;
 }
 
 std::ostream &operator<<(ostream &out, const Course &c) {
@@ -93,7 +93,7 @@ std::ostream &operator<<(ostream &out, const Course &c) {
   out << c.name << " (";
   bool first = true;
 
-  for (const CourseName &cname : c)
+  for (const CourseName& cname : c)
   {
     if (!first)
       out << ',';

@@ -39,18 +39,6 @@ public:
     Course (const CourseName& cname, const std::initializer_list<CourseName> prereqsList);
 
     /**
-     * Create a deep copy of a course
-     * @param course - the course to copy
-     */
-    Course(const Course &course);
-
-    /**
-     * Move constructor
-     * @param course
-     */
-    Course(Course &&course);
-
-    /**
      * Creates a Course with a range of prerequisites
      *
      * @param cname Name of the course
@@ -59,17 +47,7 @@ public:
      */
     template<typename Iterator>
     // Note: use of template requires definition to be here in the header
-    Course( const CourseName& cname, Iterator firstCourse, Iterator lastCourse)
-            : name(cname)
-    {
-      for(Iterator it = firstCourse; it != lastCourse; it++)
-        prereqs.push_back(*it);
-    }
-
-    /**
-     * Just your run of the mill destructor
-     */
-    ~Course() = default;  // vector handles its own deallocation
+    Course( const CourseName& cname, Iterator firstCourse, Iterator lastCourse);
 
     iterator begin() { return prereqs.begin(); }
     const_iterator begin() const { return prereqs.cbegin(); }
@@ -105,54 +83,31 @@ public:
     void removePrereq(const CourseName& cname);
 
     /**
-     * No longer needed with use of vector or other iterators
-     *
-     * @deprecated
-     * @precondition 0 <= i && i < getNumberofPrereqs()
-     * @param i index of the prerequisite to retrieve
-     * @return name of the prerequisite course
-     */
-    // CourseName getPrereq(int i) const;
-
-    /**
-     * Assigns one Course to another (Copy Assignment)
-     * @param rhs the Course to be assigned
-     * @return
-     */
-    const Course& operator=(const Course &rhs);
-
-    /**
-     * Assigns one Course to another (Move Assignment)
+     * Compares two courses for equality
+     * @param lhs
      * @param rhs
      * @return
      */
-    Course& operator=(Course &&rhs);
+    bool operator==(const Course &rhs);
 
-
+    /**
+     * Compares the CourseName of 2 Courses
+     * @param lhs
+     * @param rhs
+     * @return true if lhs CourseName is less thant rhs CourseName
+     */
+    bool operator<(const Course &rhs);
 
 private:
     friend std::ostream& operator<< (std::ostream& out, const Course& c);
 };
 
-/**
- * Compares two courses for equality
- * @param lhs
- * @param rhs
- * @return
- */
-bool operator==(const Course &lhs, const Course &rhs);
-
-/**
- * Compares the CourseName of 2 Courses
- * @param lhs
- * @param rhs
- * @return true if lhs CourseName is less thant rhs CourseName
- */
-bool operator<(const Course &lhs, const Course &rhs);
-
-
-
 std::ostream& operator<< (std::ostream& out, const Course& c);
 
+// Note: use of template requires definition to be here in the header
+template<typename Iterator>
+Course::Course( const CourseName& cname, Iterator firstCourse, Iterator lastCourse)
+        : name(cname), prereqs(firstCourse, lastCourse)
+{ }
 
 #endif

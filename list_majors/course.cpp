@@ -13,7 +13,7 @@ using namespace std;
  * Create a new course and set cname to null
  */
 Course::Course()
-  : name(), prereqs()
+  : name(), prereqs(), numberOfPrerequisites(0)
 {}
 
 /**

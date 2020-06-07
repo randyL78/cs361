@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
+#include <list>
 #include <initializer_list>
 #include "courseName.h"
 #include <iterator>
@@ -12,14 +12,12 @@ using namespace std;
 
 class Course {
     CourseName name;           ///< Name of the course
-    vector<CourseName> prereqs;
+    list<CourseName> prereqs;  ///< List of course names
+    int numberOfPrerequisites; ///< How many prereqs are currently in the list?
 
 public:
-    // aliases for iterator support piggy backing off of standard vector
-    using iterator       = vector<CourseName>::iterator;
-    using const_iterator = vector<CourseName>::const_iterator;
-    // end iterator aliases
-
+    using iterator       = list<CourseName>::iterator;
+    using const_iterator = list<CourseName>::const_iterator;
 
     /**
      * Create a new course and set cname to null
@@ -37,7 +35,7 @@ public:
      * @param cname
      * @param prereqsList
      */
-    Course (const CourseName& cname, const initializer_list<CourseName>);
+    Course (const CourseName& cname, const initializer_list<CourseName> prereqList);
 
     /**
      * Creates a Course with a range of prerequisites
@@ -108,7 +106,10 @@ std::ostream& operator<< (std::ostream& out, const Course& c);
 // Note: use of template requires definition to be here in the header
 template<typename Iterator>
 Course::Course( const CourseName& cname, Iterator firstCourse, Iterator lastCourse)
-        : name(cname), prereqs(firstCourse, lastCourse)
-{ }
+  : name(cname), numberOfPrerequisites(0)
+{
+    for(auto it = firstCourse; it != lastCourse; ++it)
+      addPrereq(*it);
+}
 
 #endif

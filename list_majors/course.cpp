@@ -30,7 +30,7 @@ Course::Course (const CourseName& cname)
  */
 Course::Course (const CourseName& cname,
                 const std::initializer_list<CourseName> prereqsList)
-  : name(cname), numberOfPrerequisites(0)
+  : name(cname), prereqs(), numberOfPrerequisites(0)
 {
   for(auto it = prereqsList.begin(); it != prereqsList.end(); ++it)
     addPrereq(*it);
@@ -67,8 +67,7 @@ void Course::addPrereq(const CourseName& cname)
     return;
   }
 
-  // tried to use a reverse iterator and base() to simplify things,
-  // but kept having runtime errors in unitest when I did
+  // all other cases
   for(const_iterator it = prereqs.begin(); it != prereqs.end(); ++it)
   {
     // early return if duplicate

@@ -106,7 +106,7 @@ std::ostream& operator<< (std::ostream& out, const Course& c);
 // Note: use of template requires definition to be here in the header
 template<typename Iterator>
 Course::Course( const CourseName& cname, Iterator firstCourse, Iterator lastCourse)
-  : name(cname), numberOfPrerequisites(0)
+  : name(cname), prereqs(), numberOfPrerequisites(0)
 {
     for(auto it = firstCourse; it != lastCourse; ++it)
       addPrereq(*it);

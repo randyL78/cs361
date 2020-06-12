@@ -1,0 +1,2 @@
+counting.o: counting.cpp counting.h matrix.h
+jackalope.o: jackalope.cpp matrix.h counting.h

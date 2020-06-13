@@ -80,16 +80,16 @@ template <class T>
 const Matrix<T>& Matrix<T>::operator= (const Matrix<T>& m)
 {
   if (this != &m)
+  {
+    if (_length1*_length2 < m._length1*m._length2)
     {
-      if (_length1*_length2 < m._length1*m._length2)
-	{
-	  delete [] data;
-	  data = new T[m._length1*m._length2];
-	}
-      _length1 = m._length1;
-      _length2 = m._length2;
-      copy (m.data, m.data+_length1*_length2, data);
+      delete [] data;
+      data = new T[m._length1*m._length2];
     }
+    _length1 = m._length1;
+    _length2 = m._length2;
+    copy (m.data, m.data+_length1*_length2, data);
+  }
   return *this;
 }
 

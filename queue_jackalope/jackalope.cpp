@@ -36,7 +36,6 @@ void readFrom(istream& in)
 	}
 
 	solve (enclosure);
-
 }
 
 int main (int argc, char** argv)

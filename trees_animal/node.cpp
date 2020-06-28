@@ -73,8 +73,8 @@ void node::write (std::ostream& out, const node* root)
   out << root->detailText << endl;
 
   // call left and right nodes
-  write(out, root->ifNo);
   write(out, root->ifYes);
+  write(out, root->ifNo);
 }
 
 

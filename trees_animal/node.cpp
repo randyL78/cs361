@@ -82,10 +82,8 @@ void node::write (std::ostream& out, const node* root)
 void node::read (istream& in, node*& t)
 {
   // exit if end of file reached
-  if (in.eof()) {
-    t = NULL;
+  if (in.eof())
     return;
-  }
 
   // import a line of text
   string text = "";
@@ -99,5 +97,11 @@ void node::read (istream& in, node*& t)
   text = text.substr(1);
   text = text.substr(text.find_first_not_of(' '));
 
-  t = NULL;
+  t = new node (text, 0, 0);
+
+  if (type == 'Q')
+  {
+    read(in, t->ifYes);
+    read(in, t->ifNo);
+  }
 }

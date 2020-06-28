@@ -591,3 +591,7 @@ $$
 **Therefore, the average case complexity of kthLargest is O(N log N)**
 
 ## Conclusions
+
+After performing time tests on the algorithm, the actual run times fell in between the worst case analysis and the best case analysis; however, it did tend to run much closer to the worst case. Because of this, I do feel that the actual performance does support the predicted complexity overall. To be sure I had properly bracketed the function, even though the worst case did have a slightly downward trending slope, I chose a slightly larger function of $N^2 log N$ to ensure that it's slope was a true downward slope ratio with time.
+
+I do think that the average case should have been the one that ran closer to actual times. I feel part of the reason for the discrepancy is that the average case treats a random array as being balanced between lower and higher numbers than the first being evenly dispersed between both half of the array. While this may hold more or less true on average, I think that anything outside of perfectly balanced has a great effect on the runtime.

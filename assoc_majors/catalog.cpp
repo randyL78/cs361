@@ -8,13 +8,25 @@ using namespace std;
 
 
 CourseCatalog::CourseCatalog()
-{
-
-}
+{ }
 
 void CourseCatalog::read (istream& input)
 {
-
+  string line;
+  getline(input, line);
+  while (input) {
+    istringstream in(line);
+    string word;
+    in >> word;
+    CourseName c1 = parseCourseName(word);
+    coursesOffered.insert(c1);
+    while (in >> word)
+    {
+      CourseName c2 = parseCourseName(word);
+      addCourses(c1, c2);
+    }
+    getline(input, line);
+  }
 }
 
 
@@ -44,6 +56,18 @@ void CourseCatalog::addCourses (
 void CourseCatalog::removeCourse (const CourseName& c)
 {
   coursesOffered.erase(c);
+  // Erase prereqs by value. Would be simple if they were
+  // the keys, but by value not so much.
+  // Iterate through the prereqs, if the value matches c
+  // then erase it.
+  for (auto i = prereqs.begin(); i != prereqs.end(); i++)
+  {
+    auto temp_i = i;
+    if(i->second == c)
+    {
+      prereqs.erase(temp_i);
+    }
+  }
 }
 
 
@@ -74,7 +98,6 @@ bool CourseCatalog::operator== (const CourseCatalog& right) const
 {
 	return right.coursesOffered == coursesOffered;
 }
-
 
 std::ostream& operator<< (std::ostream& out, const CourseCatalog& cat)
 {

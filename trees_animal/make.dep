@@ -1,0 +1,2 @@
+animal.o: animal.cpp node.h
+node.o: node.cpp node.h

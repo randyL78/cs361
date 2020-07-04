@@ -60,13 +60,15 @@ void CourseCatalog::removeCourse (const CourseName& c)
   // the keys, but by value not so much.
   // Iterate through the prereqs, if the value matches c
   // then erase it.
-  for (auto i = prereqs.begin(); i != prereqs.end(); i++)
+  // based on solution by @Scrontch in https://stackoverflow.com/questions/2115640/stl-multimap-remove-erase-values
+  for (auto i = prereqs.begin(); i != prereqs.end();)
   {
-    auto temp_i = i;
     if(i->second == c)
-    {
-      prereqs.erase(temp_i);
-    }
+      // i becomes invalid after erase so we have to use
+      // the return value of erase() to make it valid again.
+      i = prereqs.erase(i);
+    else
+      ++i;
   }
 }
 

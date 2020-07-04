@@ -79,6 +79,7 @@ void animalGame(const char* fileName)
       in >> root;
   }
 
+
   if (root == 0) // file was empty or nonexistent
     root = new node ("cat", 0, 0);
 

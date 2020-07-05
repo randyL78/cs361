@@ -103,6 +103,10 @@ bool CourseCatalog::operator== (const CourseCatalog& right) const
 
 std::ostream& operator<< (std::ostream& out, const CourseCatalog& cat)
 {
+  for (auto c : cat)
+  {
+    out << c << endl;
+  }
 	return out;
 }
 

@@ -43,8 +43,7 @@ void CourseCatalog::addCourses (
         const CourseName& course1,
         const CourseName& prereqOfCourse1)
 {
-  coursesOffered.insert(prereqOfCourse1);
-  coursesOffered.insert(course1);
+  coursesOffered.insert({prereqOfCourse1, course1});
   prereqs.insert(make_pair(course1, prereqOfCourse1));
 }
 

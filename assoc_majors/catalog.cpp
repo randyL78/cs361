@@ -54,7 +54,6 @@ void CourseCatalog::addCourses (
  */
 void CourseCatalog::removeCourse (const CourseName& c)
 {
-  coursesOffered.erase(c);
   // Erase prereqs by value. Would be simple if they were
   // the keys, but by value not so much.
   // Iterate through the prereqs, if the value matches c
@@ -69,6 +68,8 @@ void CourseCatalog::removeCourse (const CourseName& c)
     else
       ++i;
   }
+
+  coursesOffered.erase(c);
 }
 
 

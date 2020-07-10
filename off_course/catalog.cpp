@@ -112,7 +112,9 @@ bool CourseCatalog::operator== (const CourseCatalog& right) const
 
 std::ostream& operator<< (std::ostream& out, const CourseCatalog& cat)
 {
-  for (auto c : cat)
+  vector<CourseName> sorted_courses(cat.begin(), cat.end());
+  sort(sorted_courses.begin(), sorted_courses.end());
+  for (auto c : sorted_courses)
   {
     out << c << endl;
   }

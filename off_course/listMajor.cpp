@@ -44,14 +44,23 @@ void listSemester (const CourseCatalog& catalog,
 	{
 		cout << "   " << cname << " (";
 		auto prereqs = catalog.getPrereqsOf(cname);
+		vector<CourseName> sorted_prereqs;
+
+    for (auto it = prereqs.first; it != prereqs.second; ++it)
+    {
+      sorted_prereqs.push_back(it->second);
+    }
+
+    sort(sorted_prereqs.begin(), sorted_prereqs.end());
+
 		bool firstTime = true;
-		for (auto it = prereqs.first; it != prereqs.second; ++it)
+		for (CourseName c : sorted_prereqs)
 		{
 			if (!firstTime)
 			{
 				cout << ",";
 			}
-			cout << it->second;
+			cout << c;
 			firstTime = false;
 		}
 		cout << ")" << endl;
@@ -82,26 +91,27 @@ void listMajor(CourseCatalog& catalog)
 
 
 
-//int main (int argc, char** argv)
-//{
-//	{
-//		CourseCatalog catalog;
-//		if (argc > 1)
-//		{
-//			ifstream in (argv[1]);
-//			catalog.read (in);
-//		}
-//		else
-//		{
-//			catalog.read (cin);
-//		}
-//		listMajor (catalog);
-//	}
-//  if (MemoryChecked::getCurrentCount() > 0)
-//  {
-//	  cout << "**Memory leaks detected: " << MemoryChecked::getCurrentCount()
-//	  << endl;
-//  }
-//  return 0;
-//
-//}
+int main (int argc, char** argv)
+{
+	{
+		CourseCatalog catalog;
+		if (argc > 1)
+		{
+			ifstream in (argv[1]);
+			catalog.read (in);
+		}
+		else
+		{
+			catalog.read (cin);
+		}
+		listMajor (catalog);
+	}
+
+  if (MemoryChecked::getCurrentCount() > 0)
+  {
+	  cout << "**Memory leaks detected: " << MemoryChecked::getCurrentCount()
+	  << endl;
+  }
+  return 0;
+
+}

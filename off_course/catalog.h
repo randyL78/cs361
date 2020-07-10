@@ -7,6 +7,7 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <map>
+#include <vector>
 #include <iterator>
 
 namespace std {

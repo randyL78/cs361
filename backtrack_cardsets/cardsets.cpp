@@ -23,7 +23,7 @@ void run(istream& input)
   
   string line;
   while (getline(input, line))
-    {
+  {
       Packet packet;
       
       istringstream in (line);
@@ -38,8 +38,8 @@ void run(istream& input)
 		  else
 			break;
 		}
-    }
-  
+  }
+
   cout << minimumCollectionSize(packets)
        << " packets required for a full collection."
        << endl;

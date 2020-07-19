@@ -1,0 +1,3 @@
+backtrack.o: backtrack.cpp backtrack.h
+cardsets.o: cardsets.cpp packets.h
+packets.o: packets.cpp packets.h backtrack.h

@@ -37,7 +37,7 @@ int checkSolution(BackTrack bt, const Collection& all_packets, int size, int max
     }
   }
 
-  return cards.size() == max_card ? number_of_cards : 0;
+  return (int)cards.size() == max_card ? number_of_cards : 0;
 }
 
 // Sets up the minimumCollectionSize function as a backtracking problem.

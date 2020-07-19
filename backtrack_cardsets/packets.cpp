@@ -47,6 +47,15 @@ int checkSolution(BackTrack bt, const Collection& all_packets, int size, int max
 //    1 = packet is in the collection
 int minimumCollectionSize (const Collection& allPackets)
 {
+  // Since we are just interested in the number of cards, best to remove
+  // duplicates.
+  // I'm guessing there is a pruning way of doing this, but best I
+  // could come up with was removing duplicates from the vector
+  Collection copyOfPackets(allPackets.begin(), allPackets.end());
+  sort(copyOfPackets.begin(), copyOfPackets.end());
+  auto it = unique(copyOfPackets.begin(), copyOfPackets.end());
+  copyOfPackets.resize(distance(copyOfPackets.begin(), it));
+
   // Vector to keep track of all the solutions. The minimum value in
   // the solution set is the one we want to return.
   vector<int> solutions;
@@ -54,11 +63,11 @@ int minimumCollectionSize (const Collection& allPackets)
   // Find the number of possible answers by finding unique packet values in the
   // collection. Since these are aliases for integers and are contiguous, then this
   // amounts to finding the max value.
-  int max_card = findMax(allPackets);
+  int max_card = findMax(copyOfPackets);
 
   // Since we are dealing with a vector that isn't changing, we only want to check
   // the size once!
-  int all_packets_count = allPackets.size();
+  int all_packets_count = copyOfPackets.size();
 
   BackTrack bt(all_packets_count, 2);
 
@@ -68,7 +77,7 @@ int minimumCollectionSize (const Collection& allPackets)
   {
     // check current bt to see if it is a solution, if it is push the number of cards in
     // the solution to the solutions vector.
-    int solved = checkSolution(bt, allPackets, all_packets_count, max_card);
+    int solved = checkSolution(bt, copyOfPackets, all_packets_count, max_card);
     if(solved > 0)
       solutions.push_back(solved);
 

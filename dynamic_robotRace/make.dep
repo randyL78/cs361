@@ -1,0 +1,2 @@
+race.o: race.cpp checkpoint.h
+robot.o: robot.cpp checkpoint.h

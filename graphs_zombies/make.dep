@@ -1,0 +1,3 @@
+graphUtils.o: graphUtils.cpp graph.h graphUtils.h
+randGenerator.o: randGenerator.cpp
+zombies.o: zombies.cpp graph.h graphUtils.h traversals.h

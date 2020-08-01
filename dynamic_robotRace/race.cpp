@@ -53,6 +53,37 @@ double recursiveMinRaceTime (const vector<Checkpoint>& raceCourse, int current_c
   return (best_so_far < penalty_route) ? best_so_far : penalty_route;
 }
 
+double zeilMinRaceTime(const vector<Checkpoint>& raceCourse)
+{
+  //Solution by dynamic programming
+  vector<double> bestTimes;
+
+  /**
+   * Best time to reach checkpoint i is the smallest, for all 0 <= j < i,
+   * of the 1 + best time to reach checkpoint j plus the travel time from j to
+   * i plus the sum of the penalties for all checkpoints between j and i.
+   */
+
+  bestTimes.push_back(0.0); // special case for (0,0)
+
+  for (unsigned i = 1; i < raceCourse.size(); ++i)
+  {
+    double accumulatedPenalties = 0.0;
+    double bestTimeI = std::numeric_limits<double>::max();
+    for (int j = i-1; j >= 0; --j) // working backwards makes it easy
+      //   to accumulate the penalties
+    {
+      double travelTime = distanceBetween(raceCourse[j], raceCourse[i]);
+      double timeToI = 1.0 + bestTimes[j] + travelTime
+                       + accumulatedPenalties;
+      bestTimeI = min(bestTimeI, timeToI);
+      accumulatedPenalties += raceCourse[j].penalty;
+    }
+    bestTimes.push_back(bestTimeI);
+  }
+  return bestTimes[bestTimes.size()-1] - 1.0;
+}
+
 double tableMinRaceTime(const vector<Checkpoint>& raceCourse)
 {
   // store size of vector so we aren't repeatedly calling .size()
@@ -142,7 +173,7 @@ double minRaceTime (const vector<Checkpoint>& raceCourse)
 {
   int num_of_checkpoints = raceCourse.size();
 //  return recursiveMinRaceTime(raceCourse, num_of_checkpoints - 1, num_of_checkpoints - 1);
-  return tableMinRaceTime(raceCourse);
+  return recursiveMinRaceTime(raceCourse, num_of_checkpoints, num_of_checkpoints);
 
   double distances[num_of_checkpoints][num_of_checkpoints];
   distances[0][0] = 0.0;

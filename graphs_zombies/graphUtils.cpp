@@ -22,7 +22,7 @@ vector<Vertex> topologicalSort (const Graph& g)
 	for (auto v = allVertices.first; v != allVertices.second; ++v)
 	{
 		auto incoming = in_edges(*v, g);
-		inDegree[*v] = distance(incoming.first, incoming.second);
+		inDegree[*v] = boost::distance(incoming.first, incoming.second);
 		if (inDegree[*v] == 0)
 			q.push(*v);
 	}

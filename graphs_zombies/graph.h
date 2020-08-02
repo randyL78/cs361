@@ -12,11 +12,10 @@
 #include <boost/graph/adjacency_list.hpp>
 
 
-
-
 typedef boost::adjacency_list<boost::listS, // store edges in lists
 		                      boost::vecS, // store vertices in a vector
-							  boost::bidirectionalS // a directed graph, with in_edges
+							  boost::undirectedS // an undirected graph, zombies don't care
+							  // about one way streets.
 							  // no bundled properties on vertices & edges
 							  >
                                 Graph;

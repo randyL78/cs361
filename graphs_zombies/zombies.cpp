@@ -54,7 +54,7 @@ void readGraph(istream& in, Graph& g)
   in >> nV >> nE >> delay;
 
   /* create the actual graph */
-  // add the edges. Per the Boost.Graph docs, vertices will be added
+  // add the edges. Per the Boost::Graph docs, vertices will be added
   // automatically if they don't exist.
   for (int i = 0; i < nE; ++i)
   {
@@ -72,7 +72,7 @@ void readGraph(istream& in, Graph& g)
 
 void solve (const Graph& g)
 {
-	int longestDelay = 0;
+//	int longestDelay = 0;
   //*** Compute and print the longest amount of time we can delay the
   //*** zombies with a single barrier.
   auto vertexRange = vertices(g);
@@ -86,41 +86,103 @@ void solve (const Graph& g)
           *vertexRange.second - 1,
           distances);
 
-  // calculate distance of shortest path
-  int baseShortestDistance = 0;
-  int size = baseShortestPath.size();
+  // track the current shortest distance. Setting it impossibly high
+  // to guarantee first pass changes it.
+  int shortestDistanceSoFar = INT_MAX;
+  int longestDistanceSoFar = 0;
 
-  for (int i = 0; i < size - 1; ++i)
+  // We know that the barricade is going to do its best
+  // by being on the best path so loop through best path
+  // and place barricade at each edge in turn.
+  int size = baseShortestPath.size();
+  for(int i = 0; i < size - 1; ++i)
   {
-    auto e = boost::edge(baseShortestPath[i],
+    // get the edge to add barricade to
+    auto edge = boost::edge(baseShortestPath[i],
             baseShortestPath[i + 1],
             g).first;
-    baseShortestDistance += distances[e];
-  }
 
-  // second loop through shortest path to place barricades.
-  for (int i = 0; i < size - 1; ++i)
-  {
-    auto edge = boost::edge(baseShortestPath[i],
-                         baseShortestPath[i + 1],
-                         g).first;
 
+    // add the barricade delay
     distances[edge] += delay;
 
-    int newShortestDistance =
-            findWeightedShortestDistance(
-                    g,
-                    *vertexRange.first,
-                    *vertexRange.second - 1,
-                    distances);
+    int tempBestBath = findWeightedShortestDistance(
+            g,
+            *vertexRange.first,
+            *vertexRange.second - 1,
+            distances);
 
-    if(newShortestDistance - baseShortestDistance > longestDelay)
-      longestDelay = newShortestDistance - baseShortestDistance;
+    cout << tempBestBath << endl;
 
+    if (tempBestBath > longestDistanceSoFar)
+      longestDistanceSoFar = tempBestBath;
+
+    if(tempBestBath < shortestDistanceSoFar)
+      shortestDistanceSoFar = tempBestBath;
+
+    // remove the barricade delay
     distances[edge] -= delay;
   }
 
-	cout << longestDelay << endl;
+  cout << longestDistanceSoFar - shortestDistanceSoFar << endl;
+// // All edges attempt
+//  auto edgeRange = boost::edges(g);
+//  for(auto edge = edgeRange.first; edge != edgeRange.second; ++edge)
+//  {
+//    // add the barricade delay
+//    distances[*edge] += delay;
+//
+//    int tempBestBath = findWeightedShortestDistance(
+//            g,
+//            *vertexRange.first,
+//            *vertexRange.second - 1,
+//            distances);
+//
+//    cout << tempBestBath << endl;
+//
+//    if (tempBestBath > longestDistanceSoFar)
+//      longestDistanceSoFar = tempBestBath;
+//
+//    if(tempBestBath < shortestDistanceSoFar)
+//      shortestDistanceSoFar = tempBestBath;
+//
+//    // remove the barricade delay
+//    distances[*edge] -= delay;
+//  }
+//  // calculate distance of shortest path
+//  int baseShortestDistance = 0;
+//  int size = baseShortestPath.size();
+//
+//  for (int i = 0; i < size - 1; ++i)
+//  {
+//    auto e = boost::edge(baseShortestPath[i],
+//            baseShortestPath[i + 1],
+//            g).first;
+//    baseShortestDistance += distances[e];
+//  }
+//
+//  // second loop through shortest path to place barricades.
+//  for (int i = 0; i < size - 1; ++i)
+//  {
+//    auto edge = boost::edge(baseShortestPath[i],
+//                         baseShortestPath[i + 1],
+//                         g).first;
+//
+//    distances[edge] += delay;
+//
+//    int newShortestDistance =
+//            findWeightedShortestDistance(
+//                    g,
+//                    *vertexRange.first,
+//                    *vertexRange.second - 1,
+//                    distances);
+//
+//    if(newShortestDistance - baseShortestDistance > longestDelay)
+//      longestDelay = newShortestDistance - baseShortestDistance;
+//
+//    distances[edge] -= delay;
+//  }
+//	cout << longestDelay << endl;
 }
 
 int main (int argc, char** argv)
